@@ -74,6 +74,7 @@ const Home = () => {
 
         if (response.ok) {
             toast.success('Success!')
+            window.reload()
         }
         //   }
 
