@@ -191,7 +191,6 @@ const Home = () => {
                             <em>None</em>
                         </MenuItem> */}
                             <MenuItem value="kunduzgi">Kúndizgi</MenuItem>
-                            <MenuItem value="sirtqi">Sırtqı</MenuItem>
                             <MenuItem value="keshki">Keshki</MenuItem>
                             {
                                 direction === "markazlashtirilgan-post-operatori" && (
