@@ -194,12 +194,15 @@ const Home = () => {
                             <MenuItem value="keshki">Keshki</MenuItem>
                             {
                                 direction === "markazlashtirilgan-post-operatori" && (
-                                    <>
                                         <MenuItem value="dual">Dual</MenuItem>
-                                        <MenuItem value="sırtqı">Sırtqı</MenuItem>
-                                    </>
                                 )
                             }
+                            {
+                                direction === "markazlashtirilgan-post-operatori" && (
+                                    <MenuItem value="sırtqı">Sırtqı</MenuItem>
+                                )
+                            }
+
                         </Select>
                     </FormControl>
                 </Stack>
