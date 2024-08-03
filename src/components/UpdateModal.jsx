@@ -39,7 +39,7 @@ const UpdateModal = () => {
             };
             fetchData();
         }
-    }, [updateModal.id]);
+    }, [updateModal]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -200,8 +200,9 @@ const UpdateModal = () => {
                             id="demo-simple-select-standard-1"
                             value={formData.yonalish}
                             onChange={handleInputChange}
+                            name="yonalish"
                             label="Jónelisti tańlań"
-                            required
+required
                         >
                             <MenuItem value="stomatologiya-ishi">Стоматология иши</MenuItem>
                             <MenuItem value="hamshiralik-ishi">Ҳамширалик иши</MenuItem>
