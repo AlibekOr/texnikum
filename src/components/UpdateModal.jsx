@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
 import { Button, FormControl, InputLabel, MenuItem, Select, Stack } from '@mui/material'
+import React, { useContext, useEffect, useState } from 'react'
 import SendIcon from '@mui/icons-material/Send';
+import { url } from '../../utils/Url';
 import { MdClose } from 'react-icons/md';
 import { UpdateModalContext } from '../context/updateModalContext';
-import { url } from '../../utils/Url';
 
 const UpdateModal = () => {
     const { updateModal, setUpdateModal } = useContext(UpdateModalContext)
@@ -21,22 +21,15 @@ const UpdateModal = () => {
     });
 
     useEffect(() => {
-        if (updateModal.id && updateModal.id !== 'null') {
-            const fetchData = async () => {
-                try {
-                    const response = await fetch(`${url}/users/${updateModal.id}`);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const data = await response.json();
-                    setFormData(data);
-                } catch (error) {
-                    console.error('Ma\'lumotlarni yuklashda xatolik:', error);
-                }
-            };
-            fetchData();
+        if (updateModal.id) {
+            fetch(`${url}/users/${updateModal.id}`)
+            .then(response => response.json())
+            .then(data => {
+                setFormData(data);
+            })
+            .catch(error => console.error(error));
         }
-    }, [updateModal]);
+    }, [updateModal.id])
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -47,7 +40,7 @@ const UpdateModal = () => {
     };
 
     const handleUpdate = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         console.log("Updating user data...", formData);
 
         try {
@@ -73,7 +66,7 @@ const UpdateModal = () => {
         } catch (error) {
             console.error("Fetch error:", error);
         }
-    };
+    }
 
     return (
         <form className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white max-w-md mx-auto md:shadow p-10 md:border md:rounded-md ${updateModal.isOpen ? 'block' : 'hidden'}`} onSubmit={handleUpdate}>
@@ -105,7 +98,20 @@ const UpdateModal = () => {
                     <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Familiyası</label>
                 </div>
             </div>
-            {/* Boshqa input maydonlari uchun ham shunga o'xshash kod */}
+            <div className="relative z-0 w-full mb-5 group">
+                <input 
+                    onChange={handleInputChange} 
+                    value={formData.otasiningIsmi} 
+                    type="text" 
+                    name="otasiningIsmi" 
+                    id="floating_middle_name" 
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                    placeholder=" " 
+                    required 
+                />
+                <label htmlFor="floating_middle_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Ákesiniń atı</label>
+            </div>
+            {/* Qolgan input maydonlari uchun ham shu tarzda davom eting */}
             <Stack spacing={2}>
                 <FormControl variant="standard" sx={{ minWidth: 120, width: '100%' }}>
                     <InputLabel id="demo-simple-select-standard-label-2">Jónelisti tańlań</InputLabel>
