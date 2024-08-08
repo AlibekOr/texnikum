@@ -40,34 +40,35 @@ const UpdateModal = () => {
     };
 
     const handleUpdate = async (e) => {
-        e.preventDefault()
-        console.log("Updating user data...", formData);
+    e.preventDefault()
+    console.log("Updating user data...", formData);
 
-        try {
-            const response = await fetch(`${url}/users/${updateModal.id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
-            
-            console.log("Response status:", response.status);
+    try {
+        const response = await fetch(`${url}/users/${updateModal.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        console.log("Response status:", response.status);
 
-            if (response.ok) {
-                const updatedData = await response.json();
-                console.log("Updated data:", updatedData);
-                setUpdateModal({isOpen: false, id: null});
-                // Ma'lumotlarni qayta yuklash yoki boshqa kerakli amallarni bajarish
-            } else {
-                const errorData = await response.json();
-                console.error("Error data:", errorData);
-            }
-        } catch (error) {
-            console.error("Fetch error:", error);
+        if (response.ok) {
+            const updatedData = await response.json();
+            console.log("Updated data:", updatedData);
+            setUpdateModal({isOpen: false, id: null});
+            // Ma'lumotlarni qayta yuklash yoki boshqa kerakli amallarni bajarish
+        } else {
+            const errorData = await response.json();
+            console.error("Error data:", errorData);
+            // Xato xabarini ko'rsatish
         }
+    } catch (error) {
+        console.error("Fetch error:", error);
+        // Xato xabarini ko'rsatish
     }
-
+}
     return (
         <form className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white max-w-md mx-auto md:shadow p-10 md:border md:rounded-md ${updateModal.isOpen ? 'block' : 'hidden'}`} onSubmit={handleUpdate}>
             <div className="grid md:grid-cols-2 md:gap-6">
